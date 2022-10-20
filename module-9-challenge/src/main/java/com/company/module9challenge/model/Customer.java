@@ -13,9 +13,9 @@ import java.util.Objects;
 public class Customer implements Serializable {
 
     @Id
-    @Column(name = "album_id")
+    @Column(name = "customer_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int customer_id;
+    private Integer customer_id;
 
     private String firstName;
     private String lastName;
@@ -30,13 +30,13 @@ public class Customer implements Serializable {
     private String country;
 
 
-    Customer() {}
+    public Customer() {}
 
-    public int getCustomer_id() {
+    public Integer getCustomer_id() {
         return customer_id;
     }
 
-    public void setCustomer_id(int customer_id) {
+    public void setCustomer_id(Integer customer_id) {
         this.customer_id = customer_id;
     }
 
