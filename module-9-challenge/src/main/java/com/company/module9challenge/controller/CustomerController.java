@@ -23,9 +23,29 @@ public class CustomerController {
     }
 
     /* Update an existing customer record */
-    @PutMapping(value = "/customer")
+    @PutMapping(value = "/customer/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Customer updateCustomer(@RequestBody Customer customer) {
+    public Customer updateCustomer(@RequestBody Customer customer, @PathVariable Integer id) {
+
+        Customer updatedCustomer = customerRepository.findById(id)
+                .map(c -> {
+                    c.setFirstName(customer.getFirstName());
+                    c.setLastName(customer.getLastName());
+                    c.setEmail(customer.getEmail());
+                    c.setCompany(customer.getCompany());
+                    c.setPhone(customer.getPhone());
+                    c.setAddress1(customer.getAddress1());
+                    c.setAddress2(customer.getAddress2());
+                    c.setCity(customer.getCity());
+                    c.setState(customer.getState());
+                    c.setPostalCode(customer.getPostalCode());
+                    c.setCountry(customer.getCountry());
+                    return customerRepository.save(customer);
+                })
+                .orElseGet(() -> {
+                    customer.setCustomer_id(id);
+                    return customerRepository.save(customer);
+                });
         return customerRepository.save(customer);
     }
 
